@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, signInWithGoogle } = useContext(AuthContext);
+
+  // ** Create a new user with email and password
   const handleRegister = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -15,6 +17,16 @@ const Register = () => {
       });
     e.target.reset();
   };
+
+  // ** Sign in with google account
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then(() => {})
+      .catch((err) => {
+        console.error(err.message);
+      });
+  };
+
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -70,6 +82,14 @@ const Register = () => {
               <Link to="/login" type="submit" className="btn btn-link">
                 Already register?
               </Link>
+            </div>
+            <div className="form-control mt-3">
+              <button
+                onClick={handleGoogleSignIn}
+                className="bg-purple-100 ring-2 font-semibold ring-purple-500 rounded-md"
+              >
+                Continue with Google
+              </button>
             </div>
           </form>
         </div>
