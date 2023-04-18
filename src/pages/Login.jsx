@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 
 const Login = () => {
   const { signIn, signInWithGoogle } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   // ** Create a new user with email and password
   const handleSubmit = (e) => {
@@ -11,9 +14,11 @@ const Login = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     signIn(email, password)
-      .then(() => {})
+      .then(() => {
+        e.target.reset();
+        navigate(from);
+      })
       .catch((err) => console.log(err.message));
-    e.target.reset();
   };
 
   // ** Sign in with google account
@@ -25,8 +30,8 @@ const Login = () => {
       });
   };
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col">
+    <div className="hero bg-base-200">
+      <div className="hero-content">
         <div className="text-center ">
           <h1 className="text-5xl font-bold">Login now!</h1>
         </div>

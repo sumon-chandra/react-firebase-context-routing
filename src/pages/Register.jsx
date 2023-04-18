@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 
 const Register = () => {
   const { createUser, signInWithGoogle } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   // ** Create a new user with email and password
   const handleRegister = (e) => {
@@ -11,11 +14,13 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     createUser(email, password)
-      .then(() => {})
+      .then(() => {
+        e.target.reset();
+        navigate("/");
+      })
       .catch((err) => {
-        console.log(err.message);
+        console.error(err.message);
       });
-    e.target.reset();
   };
 
   // ** Sign in with google account

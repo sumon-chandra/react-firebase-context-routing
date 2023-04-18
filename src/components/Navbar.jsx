@@ -7,24 +7,24 @@ const Navbar = () => {
   return (
     <nav className="navbar bg-yellow-200 lg:px-20">
       <div className="navbar-start">
-        <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+        <Link to="/" className="btn btn-ghost normal-case text-xl">
+          daisyUI
+        </Link>
       </div>
       <div className="navbar-center">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Item 1</a>
+            <Link to="/about">About</Link>
           </li>
           <li>
-            <a>Item 1</a>
+            <Link to="/services">Services</Link>
           </li>
           <li>
             <a>Item 3</a>
           </li>
-          {user && (
-            <li>
-              <Link to="/admin">Admin</Link>
-            </li>
-          )}
+          <li>
+            <Link to="/admin">Admin</Link>
+          </li>
         </ul>
       </div>
       <div className="navbar-end">

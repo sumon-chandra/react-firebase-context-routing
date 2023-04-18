@@ -11,6 +11,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PrivateRoute from "./routes/PrivateRoute";
 import Admin from "./pages/Admin";
+import About from "./pages/About";
+import Services from "./pages/Services";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -19,6 +21,8 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="about" element={<About />} />
+        <Route path="services" element={<Services />} />
         <Route element={<PrivateRoute />}>
           <Route path="admin" element={<Admin />} />
         </Route>
