@@ -7,6 +7,7 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
 import { app } from "../firebase/firebase.config.js";
 export const AuthContext = createContext(null);
@@ -36,11 +37,21 @@ const AuthProvider = ({ children }) => {
   // ** Sign in with Google account
   const provider = new GoogleAuthProvider();
   const signInWithGoogle = () => {
+    setLoading(true);
     return signInWithPopup(auth, provider);
+  };
+
+  // ** Update profile
+  const handleUpdateProfile = (name) => {
+    updateProfile(auth.currentUser, {
+      displayName: name,
+    });
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      handleUpdateProfile();
+      console.log(user);
       setUser(user);
       setLoading(false);
     });
@@ -55,6 +66,7 @@ const AuthProvider = ({ children }) => {
     signIn,
     logout,
     signInWithGoogle,
+    handleUpdateProfile,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
