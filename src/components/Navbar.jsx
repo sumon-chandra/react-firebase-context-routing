@@ -29,13 +29,20 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         {user ? (
-          <Link
-            to="/login"
-            onClick={() => logout()}
-            className="btn btn-sm btn-warning"
-          >
-            Logout
-          </Link>
+          <>
+            <img
+              src={user.photoURL}
+              className="avatar rounded-full shadow-lg"
+              alt=""
+            />
+            <Link
+              to="/login"
+              onClick={() => logout()}
+              className="btn btn-sm btn-warning"
+            >
+              Logout
+            </Link>
+          </>
         ) : (
           <Link to="/login" className="btn btn-smbtn-warning">
             Login

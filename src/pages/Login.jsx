@@ -1,11 +1,16 @@
 import React, { useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook, FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaGithub, FaTwitter } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 const Login = () => {
-  const { signIn, signInWithGoogle, signInWithFacebook, signInWithTwitter } =
-    useContext(AuthContext);
+  const {
+    signIn,
+    signInWithGoogle,
+    signInWithFacebook,
+    signInWithTwitter,
+    signInWithGithub,
+  } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
@@ -45,9 +50,20 @@ const Login = () => {
       });
   };
 
-  // ** Sign in with Facebook account
+  // ** Sign in with Twitter account
   const handleTwitterSignIn = () => {
     signInWithTwitter()
+      .then((res) => {
+        navigate(from);
+      })
+      .catch((error) => {
+        console.error(error.code);
+      });
+  };
+
+  // ** Sign in with Github account
+  const handleGithubSignIn = () => {
+    signInWithGithub()
       .then((res) => {
         navigate(from);
       })
@@ -121,6 +137,13 @@ const Login = () => {
               >
                 <FaTwitter className="text-xl text-blue-500" />{" "}
                 <span>Continue with Twitter</span>
+              </button>
+              <button
+                onClick={handleGithubSignIn}
+                className="bg-purple-100 mt-2 flex justify-center gap-2 items-center font-semibold ring-2 ring-purple-500 rounded-md"
+              >
+                <FaGithub className="text-xl text-blue-500" />{" "}
+                <span>Continue with Github</span>
               </button>
             </div>
           </form>

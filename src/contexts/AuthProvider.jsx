@@ -9,6 +9,7 @@ import {
   updateProfile,
   FacebookAuthProvider,
   TwitterAuthProvider,
+  GithubAuthProvider,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config.js";
 export const AuthContext = createContext(null);
@@ -21,6 +22,7 @@ const AuthProvider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
   const twitterProvider = new TwitterAuthProvider();
+  const githubProvider = new GithubAuthProvider();
 
   // ** Create new user
   const createUser = (email, password) => {
@@ -57,6 +59,12 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, twitterProvider);
   };
 
+  // ** Sign in with Twitter account
+  const signInWithGithub = () => {
+    setLoading(true);
+    return signInWithPopup(auth, githubProvider);
+  };
+
   // ** Update profile
   const handleUpdateProfile = (name) => {
     updateProfile(auth.currentUser, {
@@ -80,10 +88,11 @@ const AuthProvider = ({ children }) => {
     loading,
     signIn,
     logout,
+    handleUpdateProfile,
     signInWithGoogle,
     signInWithFacebook,
-    handleUpdateProfile,
     signInWithTwitter,
+    signInWithGithub,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
