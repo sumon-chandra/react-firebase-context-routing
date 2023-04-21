@@ -4,10 +4,11 @@ import { AuthContext } from "../contexts/AuthProvider";
 const Admin = () => {
   const { user } = useContext(AuthContext);
   return (
-    <div className="text-center py-20">
+    <div className="text-center py-20 mb-10">
       <h2 className="text-purple-500 text-4xl font-bold">
         This is the Admin panel
       </h2>
+      <p className="text-2xl font-semibold">Your name : {user?.displayName}</p>
       <p className="text-2xl font-semibold">Your email : {user?.email}</p>
     </div>
   );

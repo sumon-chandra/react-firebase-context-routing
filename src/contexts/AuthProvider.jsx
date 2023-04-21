@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -8,14 +7,20 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
+  FacebookAuthProvider,
+  TwitterAuthProvider,
 } from "firebase/auth";
-import { app } from "../firebase/firebase.config.js";
+import { auth } from "../firebase/firebase.config.js";
 export const AuthContext = createContext(null);
-const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // ** Providers
+  const googleProvider = new GoogleAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
+  const twitterProvider = new TwitterAuthProvider();
 
   // ** Create new user
   const createUser = (email, password) => {
@@ -35,10 +40,21 @@ const AuthProvider = ({ children }) => {
   };
 
   // ** Sign in with Google account
-  const provider = new GoogleAuthProvider();
   const signInWithGoogle = () => {
     setLoading(true);
-    return signInWithPopup(auth, provider);
+    return signInWithPopup(auth, googleProvider);
+  };
+
+  // ** Sign in with Facebook account
+  const signInWithFacebook = () => {
+    setLoading(true);
+    return signInWithPopup(auth, facebookProvider);
+  };
+
+  // ** Sign in with Twitter account
+  const signInWithTwitter = () => {
+    setLoading(true);
+    return signInWithPopup(auth, twitterProvider);
   };
 
   // ** Update profile
@@ -51,7 +67,6 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       handleUpdateProfile();
-      console.log(user);
       setUser(user);
       setLoading(false);
     });
@@ -66,7 +81,9 @@ const AuthProvider = ({ children }) => {
     signIn,
     logout,
     signInWithGoogle,
+    signInWithFacebook,
     handleUpdateProfile,
+    signInWithTwitter,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

@@ -5,7 +5,6 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 const PrivateRoute = () => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
-  console.log(location);
 
   return loading ? (
     <progress className="progress w-56"></progress>

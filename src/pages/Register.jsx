@@ -1,4 +1,6 @@
 import React, { useContext, useEffect } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 
@@ -81,22 +83,28 @@ const Register = () => {
                 </a>
               </label>
             </div>
-            <div className="form-control mt-6">
+            <div className="form-control">
               <button type="submit" className="btn btn-primary">
                 Register
               </button>
             </div>
-            <div className="form-control mt-3">
-              <Link to="/login" type="submit" className="btn btn-link">
-                Already register?
-              </Link>
+            <div className="form-control">
+              <Link to="/login" type="submit" className="link">
+                Already have an account?
+              </Link>{" "}
+              or
             </div>
-            <div className="form-control mt-3">
+            <div className="form-control">
               <button
                 onClick={handleGoogleSignIn}
-                className="bg-purple-100 ring-2 font-semibold ring-purple-500 rounded-md"
+                className="bg-purple-100 flex justify-center gap-2 items-center font-semibold ring-2 ring-purple-500 rounded-md"
               >
-                Continue with Google
+                <FcGoogle className="text-xl" />{" "}
+                <span>Continue with Google</span>
+              </button>
+              <button className="bg-purple-100 mt-2 flex justify-center gap-2 items-center font-semibold ring-2 ring-purple-500 rounded-md">
+                <FaFacebook className="text-xl text-blue-500" />{" "}
+                <span>Continue with Facebook</span>
               </button>
             </div>
           </form>

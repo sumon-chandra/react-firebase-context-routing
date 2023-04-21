@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook, FaTwitter } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
-
 const Login = () => {
-  const { signIn, signInWithGoogle } = useContext(AuthContext);
+  const { signIn, signInWithGoogle, signInWithFacebook, signInWithTwitter } =
+    useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
@@ -18,17 +20,42 @@ const Login = () => {
         e.target.reset();
         navigate(from);
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => console.error(err.message));
   };
 
   // ** Sign in with google account
   const handleGoogleSignIn = () => {
     signInWithGoogle()
-      .then(() => {})
+      .then(() => {
+        navigate(from);
+      })
       .catch((err) => {
         console.error(err.message);
       });
   };
+
+  // ** Sign in with Facebook account
+  const handleFacebookSignIn = () => {
+    signInWithFacebook()
+      .then((res) => {
+        navigate(from);
+      })
+      .catch((error) => {
+        console.error(error.code);
+      });
+  };
+
+  // ** Sign in with Facebook account
+  const handleTwitterSignIn = () => {
+    signInWithTwitter()
+      .then((res) => {
+        navigate(from);
+      })
+      .catch((error) => {
+        console.error(error.code);
+      });
+  };
+
   return (
     <div className="hero bg-base-200">
       <div className="hero-content">
@@ -64,20 +91,36 @@ const Login = () => {
                 </a>
               </label>
             </div>
-            <div className="form-control mt-6">
+            <div className="form-control">
               <button className="btn btn-primary">Login</button>
             </div>
-            <div className="form-control mt-3">
-              <Link to="/register" type="submit" className="btn btn-link">
+            <div className="form-control">
+              <Link to="/register" type="submit" className="link">
                 Don't have an account?
-              </Link>
+              </Link>{" "}
+              or
             </div>
-            <div className="form-control mt-3">
+            <div className="form-control">
               <button
                 onClick={handleGoogleSignIn}
-                className="bg-purple-100 font-semibold ring-2 ring-purple-500 rounded-md"
+                className="bg-purple-100 flex justify-center gap-2 items-center font-semibold ring-2 ring-purple-500 rounded-md"
               >
-                Continue with Google
+                <FcGoogle className="text-xl" />{" "}
+                <span>Continue with Google</span>
+              </button>
+              <button
+                onClick={handleFacebookSignIn}
+                className="bg-purple-100 mt-2 flex justify-center gap-2 items-center font-semibold ring-2 ring-purple-500 rounded-md"
+              >
+                <FaFacebook className="text-xl text-blue-500" />{" "}
+                <span>Continue with Facebook</span>
+              </button>
+              <button
+                onClick={handleTwitterSignIn}
+                className="bg-purple-100 mt-2 flex justify-center gap-2 items-center font-semibold ring-2 ring-purple-500 rounded-md"
+              >
+                <FaTwitter className="text-xl text-blue-500" />{" "}
+                <span>Continue with Twitter</span>
               </button>
             </div>
           </form>
