@@ -10,6 +10,7 @@ import {
   FacebookAuthProvider,
   TwitterAuthProvider,
   GithubAuthProvider,
+  OAuthProvider,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config.js";
 export const AuthContext = createContext(null);
@@ -23,6 +24,7 @@ const AuthProvider = ({ children }) => {
   const facebookProvider = new FacebookAuthProvider();
   const twitterProvider = new TwitterAuthProvider();
   const githubProvider = new GithubAuthProvider();
+  const microsoftProvider = new OAuthProvider("microsoft.com");
 
   // ** Create new user
   const createUser = (email, password) => {
@@ -59,10 +61,16 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, twitterProvider);
   };
 
-  // ** Sign in with Twitter account
+  // ** Sign in with Github account
   const signInWithGithub = () => {
     setLoading(true);
     return signInWithPopup(auth, githubProvider);
+  };
+
+  // ** Sign in with Microsoft account
+  const signInWithMicrosoft = () => {
+    setLoading(true);
+    return signInWithPopup(auth, microsoftProvider);
   };
 
   // ** Update profile
@@ -93,6 +101,7 @@ const AuthProvider = ({ children }) => {
     signInWithFacebook,
     signInWithTwitter,
     signInWithGithub,
+    signInWithMicrosoft,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

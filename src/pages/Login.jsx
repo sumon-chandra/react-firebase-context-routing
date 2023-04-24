@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook, FaGithub, FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaGithub, FaMicrosoft, FaTwitter } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 const Login = () => {
@@ -10,6 +10,7 @@ const Login = () => {
     signInWithFacebook,
     signInWithTwitter,
     signInWithGithub,
+    signInWithMicrosoft,
   } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -64,6 +65,17 @@ const Login = () => {
   // ** Sign in with Github account
   const handleGithubSignIn = () => {
     signInWithGithub()
+      .then((res) => {
+        navigate(from);
+      })
+      .catch((error) => {
+        console.error(error.code);
+      });
+  };
+
+  // ** Sign in with Microsoft account
+  const handleMicrosoftSignIn = () => {
+    signInWithMicrosoft()
       .then((res) => {
         navigate(from);
       })
@@ -144,6 +156,13 @@ const Login = () => {
               >
                 <FaGithub className="text-xl text-blue-500" />{" "}
                 <span>Continue with Github</span>
+              </button>
+              <button
+                onClick={handleMicrosoftSignIn}
+                className="bg-purple-100 mt-2 flex justify-center gap-2 items-center font-semibold ring-2 ring-purple-500 rounded-md"
+              >
+                <FaMicrosoft className="text-xl text-blue-500" />{" "}
+                <span>Continue with Microsoft</span>
               </button>
             </div>
           </form>
